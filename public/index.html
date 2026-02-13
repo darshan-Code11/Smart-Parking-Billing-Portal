@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vega City Mall Parking Portal</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", Arial, sans-serif;
+    }
+
+    body {
+      background: #050b18;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .bg-animation {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 102, 255, 0.25), transparent 60%);
+      animation: glowMove 6s infinite alternate ease-in-out;
+      z-index: -1;
+    }
+
+    @keyframes glowMove {
+      0% { transform: translate(-30px, -30px); }
+      100% { transform: translate(30px, 30px); }
+    }
+
+    header {
+      text-align: center;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    header h1 {
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: #00aaff;
+      text-shadow: 0px 0px 12px rgba(0, 170, 255, 0.5);
+    }
+
+    header p {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .tab-btn:hover {
+      background: rgba(0, 170, 255, 0.3);
+    }
+
+    .tab-btn.active {
+      background: #00aaff;
+      color: black;
+      font-weight: bold;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0px); }
+    }
+
+    .desc {
+      margin-bottom: 20px;
+      color: #ccc;
+      font-size: 14px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.07);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 25px rgba(0, 170, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      margin-bottom: 15px;
+      color: #00aaff;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      background: #00aaff;
+      color: black;
+      font-weight: bold;
+      transition: 0.3s;
+      margin-top: 8px;
+    }
+
+    .btn:hover {
+      background: white;
+      color: black;
+    }
+
+    .btn.danger {
+      background: #ff3b3b;
+      color: white;
+    }
+
+    .btn.danger:hover {
+      background: white;
+      color: black;
+    }
+
+    .btn.print {
+      background: lime;
+      color: black;
+    }
+
+    .btn.print:hover {
+      background: white;
+      color: black;
+    }
+
+    .ticket-box {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      font-size: 14px;
+      line-height: 22px;
+      border-left: 4px solid #00aaff;
+      animation: pop 0.4s ease;
+      word-wrap: break-word;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .table-box {
+      overflow-x: auto;
+      margin-top: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    th {
+      background: rgba(0, 170, 255, 0.2);
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: #aaa;
+      font-size: 13px;
+      margin-top: 30px;
+    }
+
+    .alertBox {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .success {
+      background: rgba(0, 255, 100, 0.2);
+      border-left: 4px solid lime;
+      color: lime;
+    }
+
+    .error {
+      background: rgba(255, 0, 0, 0.2);
+      border-left: 4px solid red;
+      color: red;
+    }
+
+    .warning {
+      background: rgba(255, 200, 0, 0.2);
+      border-left: 4px solid orange;
+      color: orange;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      background: gray !important;
+      color: white !important;
+    }
+
+    @media(max-width: 768px) {
+      header h1 { font-size: 24px; }
+      .container { padding: 15px; }
+      .grid { grid-template-columns: 1fr; }
+      .tabs { flex-direction: column; }
+      .tab-btn { width: 100%; max-width: 350px; }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+
+      #printArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+        color: black;
+        padding: 20px;
+      }
+    }
+
+    .receipt {
+      max-width: 380px;
+      margin: auto;
+      border: 2px dashed black;
+      padding: 15px;
+      background: white;
+      color: black;
+    }
+
+    .receipt h2 {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .receipt p {
+      font-size: 13px;
+      margin: 5px 0;
+    }
+
+    .receipt hr {
+      margin: 10px 0;
+      border: none;
+      border-top: 1px dashed black;
+    }
+
+    .receipt .center {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-animation"></div>
+
+  <header>
+    <h1>VEGA CITY MALL</h1>
+    <p>Smart Parking Billing Portal </p>
+  </header>
+
+  <main class="container">
+
+    <section class="tabs">
+      <button id="clientBtn" class="tab-btn active" onclick="openTab('clientTab')">Client Portal</button>
+      <button id="employeeBtn" class="tab-btn" onclick="openTab('employeeLoginTab')">Employee Portal</button>
+    </section>
+
+    <!-- CLIENT TAB -->
+    <section id="clientTab" class="tab-content active">
+      <h2>Client Parking Portal</h2>
+      <p class="desc">Search your vehicle number and pay your parking bill online.</p>
+
+      <div class="card">
+        <h3>Search Ticket</h3>
+        <input type="text" id="searchVehicle" placeholder="Enter Vehicle Number" />
+        <button class="btn" onclick="searchTicket()">Search</button>
+
+        <div id="clientAlert" class="alertBox"></div>
+
+        <div id="clientTicketBox" class="ticket-box hidden"></div>
+
+        <!-- PAYMENT SHOW ONLY AFTER SEARCH -->
+        <div id="clientPaymentBox" class="ticket-box hidden">
+          <h4>Payment Options</h4>
+
+          <select id="clientPayMethod" onchange="toggleClientUPI()">
+            <option value="">Select Method</option>
+            <option value="UPI">UPI</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+          </select>
+
+          <div id="clientUPIBox" class="hidden">
+            <select id="clientUPIApp">
+              <option value="">Select UPI App</option>
+              <option value="Paytm">Paytm</option>
+              <option value="PhonePe">PhonePe</option>
+              <option value="Google Pay">Google Pay</option>
+              <option value="BHIM">BHIM</option>
+              <option value="Other UPI">Other UPI</option>
+            </select>
+          </div>
+
+          <button class="btn" onclick="clientPayNow()">Pay Now</button>
+        </div>
+
+        <!-- QR BOX INSIDE CLIENT CARD -->
+        <div id="upiScannerBox" class="ticket-box hidden">
+          <h4>UPI QR Scanner</h4>
+          <p>Scan this QR to complete payment.</p>
+
+          <div style="display:flex;justify-content:center;margin:15px 0;">
+            <div style="width:220px;height:220px;background:white;border-radius:10px;
+              display:flex;align-items:center;justify-content:center;color:black;font-weight:bold;">
+              QR CODE
+            </div>
+          </div>
+
+          <p><b>Timer:</b> <span id="upiTimer" style="color:lime;">30</span> seconds</p>
+          <p style="color:orange;">Waiting for payment confirmation...</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EMPLOYEE LOGIN -->
+    <section id="employeeLoginTab" class="tab-content">
+      <h2>Employee Login</h2>
+
+      <div class="card">
+        <h3>Login</h3>
+        <input type="text" id="empUsername" placeholder="Username" />
+        <input type="password" id="empPassword" placeholder="Password" />
+        <button class="btn" onclick="employeeLogin()">Login</button>
+        <div id="empAlert" class="alertBox"></div>
+      </div>
+    </section>
+
+    <!-- EMPLOYEE PORTAL -->
+    <section id="employeeTab" class="tab-content">
+      <h2>Employee Parking Portal</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Vehicle Check-In</h3>
+          <input type="text" id="ownerName" placeholder="Owner Name" />
+          <input type="text" id="vehicleNumber" placeholder="Vehicle Number" />
+
+          <select id="vehicleType">
+            <option value="">Select Vehicle Type</option>
+            <option value="Bike">Bike</option>
+            <option value="Car">Car</option>
+            <option value="SUV">SUV</option>
+          </select>
+
+          <button class="btn" onclick="checkIn()">Generate Ticket</button>
+          <div id="ticketBox" class="ticket-box hidden"></div>
+          <button id="printTicketBtn" class="btn print hidden" onclick="printTicketSlip()">Print Ticket</button>
+        </div>
+
+        <div class="card">
+          <h3>Checkout & Bill Generate</h3>
+          <input type="text" id="checkoutId" placeholder="Enter Ticket ID" />
+          <button class="btn danger" onclick="checkout()">Generate Bill</button>
+
+          <div id="billBox" class="ticket-box hidden"></div>
+
+          <div id="employeePaymentBox" class="ticket-box hidden">
+            <h4>Payment Method</h4>
+
+            <select id="empPayMethod" onchange="toggleEmpUPI()">
+              <option value="">Select Method</option>
+              <option value="UPI">UPI</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+            </select>
+
+            <div id="empUPIBox" class="hidden">
+              <select id="empUPIApp">
+                <option value="">Select UPI App</option>
+                <option value="Paytm">Paytm</option>
+                <option value="PhonePe">PhonePe</option>
+                <option value="Google Pay">Google Pay</option>
+                <option value="BHIM">BHIM</option>
+                <option value="Other UPI">Other UPI</option>
+              </select>
+            </div>
+
+            <button class="btn" onclick="employeePayNow()">Confirm Payment</button>
+          </div>
+
+          <div id="empScannerBox" class="ticket-box hidden">
+            <h4>UPI QR Scanner</h4>
+            <p>Scan this QR to complete payment.</p>
+
+            <div style="display:flex;justify-content:center;margin:15px 0;">
+              <div style="width:220px;height:220px;background:white;border-radius:10px;
+                display:flex;align-items:center;justify-content:center;color:black;font-weight:bold;">
+                QR CODE
+              </div>
+            </div>
+
+            <p><b>Timer:</b> <span id="empUpiTimer" style="color:lime;">45</span> seconds</p>
+            <p style="color:orange;">Waiting for payment confirmation...</p>
+          </div>
+
+          <button id="printBillBtn" class="btn print hidden" onclick="printBillSlip()">Print Bill</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>All Parking Records</h3>
+        <button class="btn" onclick="loadAllRecords()">Refresh Records</button>
+
+        <div class="table-box">
+          <table id="recordsTable">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Owner</th>
+                <th>Vehicle No</th>
+                <th>Type</th>
+                <th>Check-In</th>
+                <th>Checkout</th>
+                <th>Hours</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Method</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Vega City Mall Parking Portal | Developed by Darshu</p>
+  </footer>
+
+  <div id="printArea" class="hidden"></div>
+
+  <script>
+    const API_BASE = "http://localhost:5000/api";
+    let currentTicket = null;
+    let currentEmployeeTicket = null;
+    let lastTicketSlip = null;
+    let lastBillSlip = null;
+
+    function forceUppercase(id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", () => el.value = el.value.toUpperCase());
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      forceUppercase("searchVehicle");
+      forceUppercase("vehicleNumber");
+      forceUppercase("checkoutId");
+    });
+
+    function openTab(tabId) {
+      document.querySelectorAll(".tab-content").forEach(tab => tab.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+
+      document.getElementById(tabId).classList.add("active");
+
+      if (tabId === "clientTab") document.getElementById("clientBtn").classList.add("active");
+      else document.getElementById("employeeBtn").classList.add("active");
+    }
+
+    function showAlert(id, msg, type) {
+      const box = document.getElementById(id);
+      box.style.display = "block";
+      box.className = "alertBox " + type;
+      box.innerHTML = msg;
+    }
+
+    function getToken() {
+      return localStorage.getItem("employeeToken");
+    }
+
+    async function employeeLogin() {
+      const username = document.getElementById("empUsername").value.trim();
+      const password = document.getElementById("empPassword").value.trim();
+
+      const res = await fetch(`${API_BASE}/employee/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showAlert("empAlert", data.message, "error");
+        return;
+      }
+
+      localStorage.setItem("employeeToken", data.token);
+      showAlert("empAlert", "Login Successful.", "success");
+
+      setTimeout(() => {
+        openTab("employeeTab");
+        loadAllRecords();
+      }, 1000);
+    }
+
+    function toggleClientUPI() {
+      document.getElementById("clientUPIBox").classList.toggle(
+        "hidden",
+        document.getElementById("clientPayMethod").value !== "UPI"
+      );
+    }
+
+    function toggleEmpUPI() {
+      document.getElementById("empUPIBox").classList.toggle(
+        "hidden",
+        document.getElementById("empPayMethod").value !== "UPI"
+      );
+    }
+
+    // CLIENT SEARCH
+    async function searchTicket() {
+      document.getElementById("clientPaymentBox").classList.add("hidden");
+      document.getElementById("upiScannerBox").classList.add("hidden");
+      document.getElementById("clientTicketBox").classList.add("hidden");
+
+      const vehicle = document.getElementById("searchVehicle").value.trim().toUpperCase();
+
+      if (!vehicle) {
+        showAlert("clientAlert", "Please enter vehicle number first.", "warning");
+        return;
+      }
+
+      const res = await fetch(`${API_BASE}/tickets`);
+      const data = await res.json();
+
+      const ticket = data.tickets.find(t => t.vehicleNumber === vehicle);
+
+      if (!ticket) {
+        showAlert("clientAlert", "Ticket not found for this vehicle number.", "error");
+        return;
+      }
+
+      currentTicket = ticket;
+
+      document.getElementById("clientTicketBox").classList.remove("hidden");
+      document.getElementById("clientTicketBox").innerHTML = `
+        <h4>Ticket Details</h4>
+        <hr>
+        <p><b>Ticket ID:</b> ${ticket.id}</p>
+        <p><b>Owner:</b> ${ticket.ownerName}</p>
+        <p><b>Vehicle:</b> ${ticket.vehicleNumber}</p>
+        <p><b>Type:</b> ${ticket.vehicleType}</p>
+        <p><b>Check-In:</b> ${new Date(ticket.checkInTime).toLocaleString()}</p>
+        <p><b>Status:</b> ${ticket.paymentStatus}</p>
+        <p><b>Amount:</b> ${ticket.amount ? "₹" + ticket.amount : "Not Generated Yet"}</p>
+      `;
+
+      if (ticket.paymentStatus === "UNPAID") {
+        document.getElementById("clientPaymentBox").classList.remove("hidden");
+        showAlert("clientAlert", "Ticket Found. Please proceed with payment.", "success");
+      } else {
+        showAlert("clientAlert", "Payment already completed.", "success");
+      }
+    }
+
+    // CLIENT PAY WITH 30 SEC QR ALWAYS
+    async function clientPayNow() {
+      if (!currentTicket) {
+        return showAlert("clientAlert", "Search vehicle number first.", "warning");
+      }
+
+      const method = document.getElementById("clientPayMethod").value;
+      const upiApp = document.getElementById("clientUPIApp").value;
+
+      if (!method) {
+        return showAlert("clientAlert", "Select payment method first.", "warning");
+      }
+
+      if (method === "UPI" && !upiApp) {
+        return showAlert("clientAlert", "Select UPI App.", "warning");
+      }
+
+      // Auto generate bill before payment
+      if (!currentTicket.amount) {
+        const billRes = await fetch(`${API_BASE}/tickets/autobill/${currentTicket.vehicleNumber}`, {
+          method: "POST"
+        });
+
+        const billData = await billRes.json();
+
+        if (!billRes.ok) {
+          return showAlert("clientAlert", billData.message, "error");
+        }
+
+        currentTicket = billData.ticket;
+      }
+
+      // Show QR Scanner
+      const qrBox = document.getElementById("upiScannerBox");
+      qrBox.classList.remove("hidden");
+      qrBox.scrollIntoView({ behavior: "smooth" });
+
+      let t = 30;
+      document.getElementById("upiTimer").innerText = t;
+
+      const interval = setInterval(async () => {
+        t--;
+        document.getElementById("upiTimer").innerText = t;
+
+        if (t <= 0) {
+          clearInterval(interval);
+
+          const payRes = await fetch(`${API_BASE}/tickets/pay/${currentTicket.id}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              method,
+              upiApp: method === "UPI" ? upiApp : null
+            })
+          });
+
+          const payData = await payRes.json();
+
+          qrBox.classList.add("hidden");
+
+          if (!payRes.ok) {
+            return showAlert("clientAlert", payData.message, "error");
+          }
+
+          showAlert("clientAlert", "Payment Done Successfully!", "success");
+
+          searchTicket();
+          loadAllRecords();
+        }
+      }, 1000);
+    }
+
+    // EMPLOYEE CHECKIN
+    async function checkIn() {
+      const ownerName = document.getElementById("ownerName").value.trim();
+      const vehicleNumber = document.getElementById("vehicleNumber").value.trim().toUpperCase();
+      const vehicleType = document.getElementById("vehicleType").value;
+
+      if (!ownerName || !vehicleNumber || !vehicleType) {
+        alert("Fill all fields.");
+        return;
+      }
+
+      const res = await fetch(`${API_BASE}/tickets/checkin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + getToken()
+        },
+        body: JSON.stringify({ ownerName, vehicleNumber, vehicleType })
+      });
+
+      const data = await res.json();
+      if (!res.ok) return alert(data.message);
+
+      lastTicketSlip = data.ticket;
+      document.getElementById("checkoutId").value = data.ticket.id;
+
+      document.getElementById("ticketBox").classList.remove("hidden");
+      document.getElementById("ticketBox").innerHTML = `
+        <h4>Ticket Generated</h4>
+        <hr>
+        <p><b>Ticket ID:</b> ${data.ticket.id}</p>
+        <p><b>Owner:</b> ${data.ticket.ownerName}</p>
+        <p><b>Vehicle:</b> ${data.ticket.vehicleNumber}</p>
+        <p><b>Type:</b> ${data.ticket.vehicleType}</p>
+        <p><b>Check-In:</b> ${new Date(data.ticket.checkInTime).toLocaleString()}</p>
+        <hr>
+        <p><b>Rate:</b> ₹20 per hour</p>
+      `;
+
+      document.getElementById("printTicketBtn").classList.remove("hidden");
+      loadAllRecords();
+    }
+
+    async function checkout() {
+      const id = document.getElementById("checkoutId").value.trim().toUpperCase();
+      if (!id) return alert("Enter ticket ID.");
+
+      const res = await fetch(`${API_BASE}/tickets/checkout/${id}`, {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + getToken() }
+      });
+
+      const data = await res.json();
+      if (!res.ok) return alert(data.message);
+
+      lastBillSlip = data.ticket;
+      currentEmployeeTicket = data.ticket;
+
+      document.getElementById("billBox").classList.remove("hidden");
+      document.getElementById("billBox").innerHTML = `
+        <h4>Bill Generated</h4>
+        <hr>
+        <p><b>Ticket ID:</b> ${data.ticket.id}</p>
+        <p><b>Vehicle:</b> ${data.ticket.vehicleNumber}</p>
+        <p><b>Hours:</b> ${data.ticket.totalHours}</p>
+        <p><b>Amount:</b> ₹${data.ticket.amount}</p>
+        <p><b>Status:</b> UNPAID</p>
+      `;
+
+      document.getElementById("employeePaymentBox").classList.remove("hidden");
+      document.getElementById("printBillBtn").classList.add("hidden");
+
+      loadAllRecords();
+    }
+
+    async function employeePayNow() {
+      const method = document.getElementById("empPayMethod").value;
+      const upiApp = document.getElementById("empUPIApp").value;
+
+      if (!method) return alert("Select method.");
+      if (method === "UPI" && !upiApp) return alert("Select UPI App.");
+
+      if (method === "UPI") {
+        document.getElementById("empScannerBox").classList.remove("hidden");
+
+        let t = 45;
+        document.getElementById("empUpiTimer").innerText = t;
+
+        const interval = setInterval(async () => {
+          t--;
+          document.getElementById("empUpiTimer").innerText = t;
+
+          if (t <= 0) {
+            clearInterval(interval);
+
+            const res = await fetch(`${API_BASE}/tickets/pay/${currentEmployeeTicket.id}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ method, upiApp })
+            });
+
+            const data = await res.json();
+
+            document.getElementById("empScannerBox").classList.add("hidden");
+            document.getElementById("employeePaymentBox").classList.add("hidden");
+
+            alert("Payment Successful via UPI!");
+            document.getElementById("printBillBtn").classList.remove("hidden");
+
+            lastBillSlip = data.ticket;
+            loadAllRecords();
+          }
+        }, 1000);
+
+        return;
+      }
+
+      const res = await fetch(`${API_BASE}/tickets/pay/${currentEmployeeTicket.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ method })
+      });
+
+      const data = await res.json();
+
+      alert("Payment Successful!");
+      document.getElementById("employeePaymentBox").classList.add("hidden");
+      document.getElementById("printBillBtn").classList.remove("hidden");
+
+      lastBillSlip = data.ticket;
+      loadAllRecords();
+    }
+
+    function printTicketSlip() {
+      if (!lastTicketSlip) return;
+
+      const t = lastTicketSlip;
+      document.getElementById("printArea").classList.remove("hidden");
+
+      document.getElementById("printArea").innerHTML = `
+        <div class="receipt">
+          <h2>VEGA CITY MALL</h2>
+          <p class="center">Parking Ticket Slip</p>
+          <hr>
+          <p><b>Ticket ID:</b> ${t.id}</p>
+          <p><b>Owner:</b> ${t.ownerName}</p>
+          <p><b>Vehicle:</b> ${t.vehicleNumber}</p>
+          <p><b>Type:</b> ${t.vehicleType}</p>
+          <p><b>Check-In:</b> ${new Date(t.checkInTime).toLocaleString()}</p>
+          <hr>
+          <p><b>Rate:</b> ₹20 per hour</p>
+          <p><b>Status:</b> ACTIVE</p>
+          <hr>
+          <p class="center">Thank you for visiting Vega City Mall</p>
+        </div>
+      `;
+
+      window.print();
+      setTimeout(() => document.getElementById("printArea").classList.add("hidden"), 1000);
+    }
+
+    function printBillSlip() {
+      if (!lastBillSlip) return;
+
+      const b = lastBillSlip;
+      document.getElementById("printArea").classList.remove("hidden");
+
+      document.getElementById("printArea").innerHTML = `
+        <div class="receipt">
+          <h2>VEGA CITY MALL</h2>
+          <p class="center">Parking Bill Receipt</p>
+          <hr>
+          <p><b>Ticket ID:</b> ${b.id}</p>
+          <p><b>Owner:</b> ${b.ownerName}</p>
+          <p><b>Vehicle:</b> ${b.vehicleNumber}</p>
+          <p><b>Type:</b> ${b.vehicleType}</p>
+          <p><b>Check-In:</b> ${new Date(b.checkInTime).toLocaleString()}</p>
+          <p><b>Checkout:</b> ${new Date(b.checkOutTime).toLocaleString()}</p>
+          <hr>
+          <p><b>Total Hours:</b> ${b.totalHours}</p>
+          <p><b>Total Amount:</b> ₹${b.amount}</p>
+          <p><b>Status:</b> ${b.paymentStatus}</p>
+          <p><b>Payment Method:</b> ${b.paymentMethod || "NOT PAID"}</p>
+          <hr>
+          <p class="center">Thank you for visiting Vega City Mall</p>
+        </div>
+      `;
+
+      window.print();
+      setTimeout(() => document.getElementById("printArea").classList.add("hidden"), 1000);
+    }
+
+    async function loadAllRecords() {
+      const res = await fetch(`${API_BASE}/tickets`);
+      const data = await res.json();
+
+      const tbody = document.querySelector("#recordsTable tbody");
+      tbody.innerHTML = "";
+
+      data.tickets.slice().reverse().forEach(ticket => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${ticket.id}</td>
+          <td>${ticket.ownerName}</td>
+          <td>${ticket.vehicleNumber}</td>
+          <td>${ticket.vehicleType}</td>
+          <td>${new Date(ticket.checkInTime).toLocaleString()}</td>
+          <td>${ticket.checkOutTime ? new Date(ticket.checkOutTime).toLocaleString() : "-"}</td>
+          <td>${ticket.totalHours || "-"}</td>
+          <td>${ticket.amount ? "₹" + ticket.amount : "-"}</td>
+          <td style="color:${ticket.paymentStatus === "PAID" ? "lime" : "orange"};font-weight:bold;">
+            ${ticket.paymentStatus}
+          </td>
+          <td>${ticket.paymentMethod || "-"}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    loadAllRecords();
+  </script>
+</body>
+</html>

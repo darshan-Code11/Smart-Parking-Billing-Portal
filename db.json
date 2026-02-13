@@ -1,0 +1,110 @@
+[
+  {
+    "id": "VEGA-795169",
+    "ownerName": "kumar",
+    "vehicleNumber": "KA05LA0581",
+    "vehicleType": "Bike",
+    "checkInTime": "2026-02-13T10:51:59.474Z",
+    "checkOutTime": "2026-02-13T10:52:24.553Z",
+    "totalHours": 1,
+    "amount": 20,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (PhonePe)"
+  },
+  {
+    "id": "VEGA-377532",
+    "ownerName": "BHAVYA",
+    "vehicleNumber": "KA05DD0011",
+    "vehicleType": "Car",
+    "checkInTime": "2026-02-13T10:53:23.948Z",
+    "checkOutTime": "2026-02-13T11:09:35.947Z",
+    "totalHours": 1,
+    "amount": 20,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (PhonePe)"
+  },
+  {
+    "id": "VEGA-708792",
+    "ownerName": "Chandan",
+    "vehicleNumber": "KA41MG2799",
+    "vehicleType": "Car",
+    "checkInTime": "2026-02-13T11:37:29.383Z",
+    "checkOutTime": "2026-02-13T11:38:00.075Z",
+    "totalHours": 1,
+    "amount": 20,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (Google Pay)"
+  },
+  {
+    "id": "VEGA-383339",
+    "ownerName": "DARSHAN",
+    "vehicleNumber": "KA05HQ4981",
+    "vehicleType": "Bike",
+    "checkInTime": "2026-02-13T11:47:44.499Z",
+    "checkOutTime": "2026-02-13T12:30:15.921Z",
+    "totalHours": 1,
+    "amount": 20,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (PhonePe)"
+  },
+  {
+    "id": "VEGA-491112",
+    "ownerName": "kushal",
+    "vehicleNumber": "KA05KK0805",
+    "vehicleType": "Bike",
+    "checkInTime": "2026-02-13T12:03:28.062Z",
+    "checkOutTime": "2026-02-13T12:04:09.503Z",
+    "totalHours": 1,
+    "amount": 20,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (BHIM)"
+  },
+  {
+    "id": "VEGA-154603",
+    "ownerName": "dhanu",
+    "vehicleNumber": "KA05DD1111",
+    "vehicleType": "Car",
+    "checkInTime": "2026-02-13T12:16:09.073Z",
+    "checkOutTime": "2026-02-13T12:16:12.443Z",
+    "totalHours": 1,
+    "amount": 20,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (Google Pay)"
+  },
+  {
+    "id": "VEGA-965737",
+    "ownerName": "adarsh",
+    "vehicleNumber": "KA05LL0581",
+    "vehicleType": "Bike",
+    "checkInTime": "2026-02-13T13:05:54.717Z",
+    "checkOutTime": "2026-02-13T14:39:07.056Z",
+    "totalHours": 2,
+    "amount": 40,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (PhonePe)"
+  },
+  {
+    "id": "VEGA-198596",
+    "ownerName": "anup",
+    "vehicleNumber": "KA05OP1234",
+    "vehicleType": "Car",
+    "checkInTime": "2026-02-13T14:37:00.936Z",
+    "checkOutTime": null,
+    "totalHours": null,
+    "amount": null,
+    "paymentStatus": "UNPAID",
+    "paymentMethod": null
+  },
+  {
+    "id": "VEGA-891631",
+    "ownerName": "deepak",
+    "vehicleNumber": "KA02SS2545",
+    "vehicleType": "Bike",
+    "checkInTime": "2026-02-13T15:22:04.335Z",
+    "checkOutTime": "2026-02-13T23:39:12.456Z",
+    "totalHours": 9,
+    "amount": 180,
+    "paymentStatus": "PAID",
+    "paymentMethod": "UPI (Google Pay)"
+  }
+]
