@@ -186,7 +186,7 @@ Deploy online using Render / Railway / Vercel
 
 Darshan Gowda 
 Final Year Project - Smart Parking System
-Project link : 
+Project link : https://darshan-code11.github.io/Smart-Parking-Billing-Portal/
 
 📜 License
 
