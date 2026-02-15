@@ -14,7 +14,7 @@ Payment options available:
 
 UPI (Paytm, PhonePe, Google Pay, BHIM, Other)
 
-Credit Card
+Credit Cards
 
 Debit Card
 
